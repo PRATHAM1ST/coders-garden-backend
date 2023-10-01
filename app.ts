@@ -8,6 +8,7 @@ import ResponseHandler from "./components/responseHandler";
 import membersRoute from "./routes/members";
 import memberRoute from "./routes/member";
 import graphqlRoute from "./routes/graphql";
+import whoami from "./routes/whoami";
 
 const corsOptions = {
 	origin: "*",
@@ -32,5 +33,6 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/member", memberRoute);
 app.use("/members", membersRoute);
 app.use("/graphql", graphqlRoute);
+app.use("/whoami", whoami);
 
 export default app;
