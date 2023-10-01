@@ -283,7 +283,7 @@ This route returns a JSON object containing details of the user who is logged in
 **Example Response:**
 
 ```http
-    GET /whoami?name=Pratham&profile_pic_url=https://avatars.githubusercontent.com/u/52632050?v=4
+    GET /whoami?profile_pic_url=https://avatars.githubusercontent.com/u/52632050?v=4
 ```
 
 ```json

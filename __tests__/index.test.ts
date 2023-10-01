@@ -92,7 +92,7 @@ describe("POST /graphql - List of Members", () => {
 		expect(Array.isArray(data.members)).toBe(true);
 
 		// Additional checks for each member object in the list
-		data.members.forEach((member : Member) => {
+		data.members.forEach((member: Member) => {
 			expect(member).toHaveProperty("name");
 			expect(member).toHaveProperty("username");
 		});
@@ -143,5 +143,43 @@ describe("POST /graphql - Specific Member", () => {
 		expect(errors).toBeUndefined(); // Check for GraphQL errors
 		expect(data).toHaveProperty("member");
 		expect(data.member).toBeNull(); // Expecting null for a non-existent member
+	});
+});
+
+describe("GET /whoami", () => {
+	it("should return error for query missing", async () => {
+		const res = await request(app).get("/whoami");
+		expect(res.body.status).toBe(false);
+		expect(res.body.message).toBe("Missing query parameters");
+	});
+
+	it("should return error for query for member not found", async () => {
+		const res = await request(app).get("/whoami?profile_pic_url=frhbghbr");
+		expect(res.body.status).toBe(false);
+		expect(res.body.message).toBe("Member not found");
+	});
+
+	it("should response with admin as true and role as owner", async () => {
+		const res = await request(app).get(
+			"/whoami?profile_pic_url=https://avatars.githubusercontent.com/u/52632050?v=4"
+		);
+		expect(res.status).toBe(200);
+		expect(res.body.data).toHaveProperty("role");
+		expect(res.body.data.role).toBe("Owner");
+		expect(res.body.data).toHaveProperty("admin");
+		expect(res.body.data.admin).toBe(true);
+		expect(res.body.message).toBe("Member found");
+	});
+
+	it("should response with admin as false and role as member", async () => {
+		const res = await request(app).get(
+			"/whoami?profile_pic_url=https://avatars.githubusercontent.com/u/115413641?v=4"
+		);
+		expect(res.status).toBe(200);
+		expect(res.body.data).toHaveProperty("role");
+		expect(res.body.data.role).toBe("Member");
+		expect(res.body.data).toHaveProperty("admin");
+		expect(res.body.data.admin).toBe(false);
+		expect(res.body.message).toBe("Member found");
 	});
 });

@@ -5,18 +5,20 @@ import ResponseHandler from "../components/responseHandler";
 export async function GET(req: Request, res: Response) {
 	/* eslint-disable camelcase */
 
-	const { name, profile_pic_url } = req.query;
+	const { profile_pic_url } = req.query;
 
-	console.log("name", name);
-
-	if (!name || !profile_pic_url) {
+	if (!profile_pic_url) {
 		throw new Error("Missing query parameters");
 	}
 
 	const m = membersListLatest.find(
 		(member) =>
-			member.name === name && member.profile_pic_url === profile_pic_url
+			member.profile_pic_url === profile_pic_url
 	);
+
+	if (!m) {
+		throw new Error("Member not found");
+	}
 
 	return ResponseHandler.success({
 		req,
