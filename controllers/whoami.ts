@@ -25,7 +25,7 @@ export async function GET(req: Request, res: Response) {
 			role: m?.role,
 			admin: m?.role.toLowerCase() === "owner" ? true : false,
 		},
-		message: "Members list",
+		message: "Member found",
 	});
 }
 

@@ -24,6 +24,11 @@ All responses from the API follow this structure:
 This route is a simple "Hello, world!" message. It's a great way to check if the API is up and running.
 
 **Example Response:**
+
+```http
+    GET /
+```
+
 ```json
 {
     "status": true,
@@ -46,6 +51,11 @@ This route returns a JSON array of objects containing details of GitHub communit
 - `github_link`: GitHub profile URL
 
 **Example Response:**
+
+```http
+    GET /members
+```
+
 ```json
 {
     "status": true,
@@ -82,7 +92,7 @@ This route returns a JSON object containing details of a specific GitHub communi
 **Example Response:**
 
 ```http
-    GET /members/PRATHAM1ST
+    GET /member/PRATHAM1ST
 ```
 
 ```json
@@ -261,6 +271,31 @@ This route returns a JSON object containing details of a specific GitHub communi
 ```
 
 
+## Route 5: /whoami
+
+This route returns a JSON object containing details of the user who is logged in. The details provided include:
+
+> ### Requires
+> search query needed
+> - name : name of the user empty_string or name
+> - profile_pic_url : profile_pic_url
+
+**Example Response:**
+
+```http
+    GET /whoami?name=Pratham&profile_pic_url=https://avatars.githubusercontent.com/u/52632050?v=4
+```
+
+```json
+{
+    "status": true,
+    "data": {
+        "role": "Owner",
+        "admin": true,
+    },
+    "message": "Member found"
+}
+```
 
 ## Using the API
 
